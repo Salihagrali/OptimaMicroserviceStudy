@@ -15,3 +15,11 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.myproject.microservices.licensingservice.LicensingServiceApplication"]
+
+#docker run ostock/licensing-service:0.0.1-SNAPSHOT
+
+#-d option runs the container in the background
+#docker run -d ostock/licensing-service:0.0.1-SNAPSHOT
+
+#docker ps to see all the running containers
+#docker stop <container_id> to stop a running container
