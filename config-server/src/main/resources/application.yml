@@ -21,3 +21,4 @@ server:
 #Example
 #http://localhost:8071/licensing-service/dev -> gives dev and default properties
 #http://localhost:8071/licensing-service/default -> only default one
+#When you request an environment-specific profile, both the requested profile and the default profile are returned.
