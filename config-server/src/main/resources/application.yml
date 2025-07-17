@@ -14,3 +14,10 @@ spring:
           search-locations: classpath:/config
 server:
   port: 8071
+
+
+#When we run a Spring Cloud Config Server, it automatically exposes
+#endpoints to server configuration properties to client applications.
+#Example
+#http://localhost:8071/licensing-service/dev -> gives dev and default properties
+#http://localhost:8071/licensing-service/default -> only default one
