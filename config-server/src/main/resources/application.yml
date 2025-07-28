@@ -3,7 +3,7 @@ spring:
     name: config-server
   profiles:
     active:
-      - native
+      - native #, git
 
   cloud:
     config:
@@ -12,8 +12,14 @@ spring:
         native:
           #Reads from a specific filesystem folder
           search-locations: classpath:/config
+        #        git:
+        #          uri: https://github.com/ihuaylupo/config.git
+        #          search-paths: licensingservice
 server:
   port: 8071
+
+encrypt:
+  key: secretkey
 
 
 #When we run a Spring Cloud Config Server, it automatically exposes
