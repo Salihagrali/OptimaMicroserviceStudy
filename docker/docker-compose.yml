@@ -30,6 +30,22 @@ services:
       backend:
         aliases:
           - "configserver"
+  eurekaserver:
+    image: ostock/eurekaserver:0.0.1-SNAPSHOT
+    environment:
+      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_CLOUD_CONFIG_URI: "http://configserver:8071"
+    ports:
+      - "8070:8070"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "eurekaserver"
   licensingservice:
     image: ostock/licensing-service:0.0.1-SNAPSHOT
     environment:
@@ -41,6 +57,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/ostock_dev"
       SPRING_DATASOURCE_USERNAME: "postgres"
       SPRING_DATASOURCE_PASSWORD: "postgres" # Use plain here if not using encryption at runtime
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
     depends_on:
       database:
         condition: service_healthy
@@ -61,6 +78,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/ostock_dev"
       SPRING_DATASOURCE_USERNAME: "postgres"
       SPRING_DATASOURCE_PASSWORD: "postgres" # Use plain here if not using encryption at runtime
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
     depends_on:
       database:
         condition: service_healthy
