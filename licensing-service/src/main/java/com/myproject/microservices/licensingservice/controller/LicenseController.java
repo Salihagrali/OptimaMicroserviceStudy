@@ -6,13 +6,15 @@ import com.myproject.microservices.licensingservice.service.LicenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeoutException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/v1/organizations/{organizationId}/licenses")
+@RequestMapping("/v1/organization/{organizationId}/license")
 public class LicenseController {
     private final LicenseService licenseService;
 
@@ -58,5 +60,10 @@ public class LicenseController {
     @DeleteMapping(value="/{licenseId}")
     public ResponseEntity<String> deleteLicense(@PathVariable("licenseId") String licenseId) {
         return ResponseEntity.ok(licenseService.deleteLicense(licenseId));
+    }
+
+    @GetMapping(value = "/")
+    public List<License> getLicense(@PathVariable("organizationId") String organizationId) throws TimeoutException {
+        return licenseService.getLicenseByOrganization(organizationId);
     }
 }
