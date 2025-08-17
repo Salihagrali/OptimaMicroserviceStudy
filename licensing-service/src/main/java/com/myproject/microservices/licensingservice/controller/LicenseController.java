@@ -3,6 +3,8 @@ package com.myproject.microservices.licensingservice.controller;
 
 import com.myproject.microservices.licensingservice.model.License;
 import com.myproject.microservices.licensingservice.service.LicenseService;
+import com.myproject.microservices.licensingservice.utils.UserContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/v1/organization/{organizationId}/license")
+@Slf4j
 public class LicenseController {
     private final LicenseService licenseService;
 
@@ -64,6 +67,8 @@ public class LicenseController {
 
     @GetMapping(value = "/")
     public List<License> getLicense(@PathVariable("organizationId") String organizationId) throws TimeoutException {
+        log.debug("LicenseServiceController Correlation id: {}",
+                UserContextHolder.getContext().getCorrelationId());
         return licenseService.getLicenseByOrganization(organizationId);
     }
 }

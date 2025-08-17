@@ -7,7 +7,11 @@ import com.myproject.microservices.licensingservice.repository.LicenseRepository
 import com.myproject.microservices.licensingservice.service.client.OrganizationDiscoveryClient;
 import com.myproject.microservices.licensingservice.service.client.OrganizationFeignClient;
 import com.myproject.microservices.licensingservice.service.client.OrganizationRestTemplateClient;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
 @Service
+@Slf4j
 public class LicenseService {
     private final MessageSource messages;
     private final LicenseRepository licenseRepository;
@@ -84,8 +89,10 @@ public class LicenseService {
         return organization;
     }
 
-    @CircuitBreaker(name = "licenseService",
-    fallbackMethod = "buildFallBackLicenseList")
+    @CircuitBreaker(name = "licenseService", fallbackMethod = "buildFallBackLicenseList")
+    @Retry(name = "retryLicenseService",fallbackMethod = "buildFallBackLicenseList")
+    @RateLimiter(name = "licenseService",fallbackMethod = "buildFallBackLicenseList")
+    @Bulkhead(name = "bulkheadLicenseService", type = Bulkhead.Type.THREADPOOL,fallbackMethod = "buildFallBackLicenseList")
     public List<License> getLicenseByOrganization(String organizationId) throws TimeoutException {
         randomlyRunLong();
         return licenseRepository.findByOrganizationId(organizationId);
