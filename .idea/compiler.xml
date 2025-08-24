@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
+        <module name="gatewayserver" />
         <module name="licensing-service" />
         <module name="configserver" />
       </profile>
@@ -26,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="configserver" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
+      <module name="gatewayserver" options="-parameters" />
       <module name="licensing-service" options="-parameters" />
       <module name="organization-service" options="-parameters" />
     </option>
