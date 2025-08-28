@@ -64,7 +64,7 @@ services:
       configserver:
         condition: service_started
     ports:
-      - "8080:8080"
+      - "8180:8080"
     networks:
       - backend
   organizationservice:
@@ -88,6 +88,45 @@ services:
       - "8081:8081"
     networks:
       - backend
+  gatewayserver:
+    image: ostock/gatewayserver:0.0.1-SNAPSHOT
+    ports:
+      - "8072:8072"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8072"
+      SPRING_CLOUD_CONFIG_URI: "http://configserver:8071"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
+      EUREKASERVER_PORT: "8070"
+      CONFIGSERVER_PORT: "8071"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+      eurekaserver:
+        condition: service_started
+    networks:
+      backend:
+        aliases:
+          - "gateway"
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    restart: always
+    environment:
+      KC_BOOTSTRAP_ADMIN: "admin"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+      KC_HTTP_ENABLED: "true"         # enable HTTP (optional for dev)
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"  # adjust for reverse proxy setups
+    ports:
+      - "8080:8080"
+    networks:
+      backend:
+        aliases:
+          - "keycloak"
+
+
 
 networks:
   backend:

@@ -1,5 +1,6 @@
 package com.myproject.microservices.licensingservice;
 
+import com.myproject.microservices.licensingservice.utils.UserContextInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -13,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 @SpringBootApplication
@@ -41,6 +44,16 @@ public class LicensingServiceApplication {
     @LoadBalanced
     @Bean
     public RestTemplate getRestTemplate(){
-        return new RestTemplate();
+        RestTemplate template = new RestTemplate();
+        List interceptors = template.getInterceptors();
+        if(interceptors == null){
+            template.setInterceptors(Collections.singletonList(
+                    new UserContextInterceptor()
+            ));
+        }else{
+            interceptors.add(new UserContextInterceptor());
+            template.setInterceptors(interceptors);
+        }
+        return template;
     }
 }

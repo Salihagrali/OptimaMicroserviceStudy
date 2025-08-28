@@ -24,7 +24,7 @@ spring:
           predicates:
             - Path=/organization/**
           filters:
-            - RewritePath=/organization/(?<path>.*), /${path}
+            - RewritePath=/organization/(?<path>.*), /$\\{path}
 
 management:
   endpoints:
@@ -34,3 +34,9 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.optimagrowth: DEBUG

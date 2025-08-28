@@ -94,7 +94,7 @@ public class LicenseService {
     @RateLimiter(name = "licenseService",fallbackMethod = "buildFallBackLicenseList")
     @Bulkhead(name = "bulkheadLicenseService", type = Bulkhead.Type.THREADPOOL,fallbackMethod = "buildFallBackLicenseList")
     public List<License> getLicenseByOrganization(String organizationId) throws TimeoutException {
-        randomlyRunLong();
+        //randomlyRunLong();
         return licenseRepository.findByOrganizationId(organizationId);
     }
 

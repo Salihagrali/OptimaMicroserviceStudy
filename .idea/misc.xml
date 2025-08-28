@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/licensing-service/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/API Gateway server/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-server/pom.xml" />
       </list>
     </option>
   </component>
