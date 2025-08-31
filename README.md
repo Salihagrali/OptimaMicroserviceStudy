@@ -5,6 +5,7 @@ I’ll try to keep things simple. Unfortunately, unlike the original GitHub repo
 ABOUT CHAPTER 9
 
 In the book, KeycloakWebSecurityConfigurerAdapter is being used. Because WebSecurityConfigurerAdapter is deprecated, we can't use KeycloakWebSecurityConfigurerAdapter either. We have to use Oauth2ResourceServer to enable Keycloak with our Spring Boot application. Keycloak configuration is almost the same, so I won't touch that.
+While authentication with keycloak works, role converter class is not triggered as expected. It could be because of versions. In other projects it works without any error but for some unknown reason i couldn't achieve role-based authorization. I am open to any advice or recommendation.
 
 First we need to add these two dependencies to our pom.xml:
 ```
@@ -108,4 +109,4 @@ public class JwtGrantedAuthConverter implements Converter<Jwt, Collection<Grante
 }
 ```
 Commented part is for realm roles.
-While authentication with keycloak works, role converter class is not triggered as expected. It could be because of versions. In other projects it works without any error but for some unknown reason i couldn't achieve role-based authorization.
+
