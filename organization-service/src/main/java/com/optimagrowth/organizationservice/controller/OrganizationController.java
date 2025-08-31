@@ -5,6 +5,7 @@ import com.optimagrowth.organizationservice.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +34,16 @@ public class OrganizationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrganization( @PathVariable("id") String id,  @RequestBody Organization organization) {
         service.delete(organization);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<String> accessByAdmin(){
+        return ResponseEntity.ok("ADMIN ACCESS");
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<String> accessByUsers(){
+        return ResponseEntity.ok("USER ACCESS");
     }
 
 }

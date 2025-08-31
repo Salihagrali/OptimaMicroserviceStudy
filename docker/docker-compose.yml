@@ -115,8 +115,8 @@ services:
     command: start-dev
     restart: always
     environment:
-      KC_BOOTSTRAP_ADMIN: "admin"
-      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"         # enable HTTP (optional for dev)
       KC_HOSTNAME_STRICT_BACKCHANNEL: "true"  # adjust for reverse proxy setups
     ports:
