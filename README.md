@@ -108,4 +108,4 @@ public class JwtGrantedAuthConverter implements Converter<Jwt, Collection<Grante
 }
 ```
 Commented part is for realm roles.
-While authentication with keycloak works, role converter class is not triggered as expected. It could be because of versions. In other projects, It works without any error but for some unknown reason, I couldn't achieve role-based authorization.
+While authentication with keycloak works, role converter class is not triggered as expected. It could be because of versions. In other projects it works without any error but for some unknown reason i couldn't achieve role-based authorization.
