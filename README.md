@@ -2,6 +2,8 @@ I am studying microservices using the book "Spring Microservices in Action, Seco
 
 I’ll try to keep things simple. Unfortunately, unlike the original GitHub repo provided by the authors, there is no chapter-wise organization. You can check my Git commit history to see what I’ve done and how I’ve resolved the problems I encountered.
 
+After Chapter 9, I decided to study only the concepts because it was very difficult to find all the deprecated codes and fix them. I decided to study the remaining chapters from the book and the github repository.
+
 ABOUT CHAPTER 9
 
 In the book, KeycloakWebSecurityConfigurerAdapter is being used. Because WebSecurityConfigurerAdapter is deprecated, we can't use KeycloakWebSecurityConfigurerAdapter either. We have to use Oauth2ResourceServer to enable Keycloak with our Spring Boot application. Keycloak configuration is almost the same, so I won't touch that.
